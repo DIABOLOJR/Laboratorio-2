@@ -18,16 +18,27 @@
 // CONFIG2
 #pragma config BOR4V = BOR40V   // Brown-out Reset Selection bit (Brown-out Reset set to 4.0V)
 #pragma config WRT = OFF        // Flash Program Memory Self Write Enable bits (Write protection off)
-
+ 
+/*
+ *Bibliotecas
+ */
 #include <xc.h>
 #include <stdint.h>
 #include "7Segmentos.h"
+
+/*
+ *Variables y asignaciones previas
+ */
 unsigned int uint8_t a = 0;
 int b = 0;
 int c = 0;
-
+int conversion = 0;
+int valor1 = 0;
+int valor2 = 0;
 float d = 0;
-
+/*
+ *Main
+ */
 void main(void) {
     return;
 }
@@ -48,15 +59,41 @@ void contador(void){
  */
 void __interrupt () isr (void){
     if(INTCONbits.RBIF == 1){
-        if (PORTDbits.RD0 == 1){
+        if (PORTBbits.RB7 == 1){
             b=0;    
             INTCONbits.RBIF == 0;
+        }else if (PORTBbits.RB1 == 1){
+            
         }
     }
 }
-
+/*
+ *Delay codigo de ejemplo en clase
+ */
 void delay_ms(unsigned int dms){
     for(int i = 0; i<dms; i++){// ciclo para el aumento en miisegundos.
         for(int j = 0; j<255; j++);
     }
+}
+
+/*
+ *Conversion del ADC
+ */
+
+void valorsevenseg (void){
+    valor1 = conversion && 0b00001111;
+    encendido(valor1);
+}
+void valorsevenseg2 (void){
+    valor2 = conversion && 0b11110000;
+    valor2 = valor2>>4;
+    encendido(valor2);
+}
+
+/*
+ *
+ */
+
+void encendido (void){
+    
 }
