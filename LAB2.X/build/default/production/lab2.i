@@ -2650,6 +2650,10 @@ typedef int16_t intptr_t;
 typedef uint16_t uintptr_t;
 # 23 "lab2.c" 2
 
+# 1 "./7Segmentos.h" 1
+# 35 "./7Segmentos.h"
+void sevenseg (valor);
+# 24 "lab2.c" 2
 
 unsigned int uint8_t a = 0;
 int b = 0;

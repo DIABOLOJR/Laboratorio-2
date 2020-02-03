@@ -2494,11 +2494,13 @@ extern __bank0 __bit __powerdown;
 extern __bank0 __bit __timeout;
 # 27 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.10\\pic\\include\\xc.h" 2 3
 # 34 "./7Segmentos.h" 2
+
+void sevenseg (valor);
 # 1 "SEVENSEGS.c" 2
 
 int valor;
 void sevenseg (int valor){
-    switch (a){
+    switch (valor){
         case 1:
             PORTC = 0x28;
             break;
@@ -2509,32 +2511,43 @@ void sevenseg (int valor){
             PORTC = 0x6D;
             break;
         case 4:
-            PORTC = 0;
+            PORTC = 0x2B;
             break;
         case 5:
+            PORTC = 0x67;
             break;
         case 6:
+            PORTC = 0xE7;
             break;
         case 7:
+            PORTC = 0x2D;
             break;
         case 8:
+            PORTC = 0xEF;
             break;
         case 9:
+            PORTC = 0x6F;
             break;
         case 10:
+            PORTC = 0xAF;
             break;
         case 11:
+            PORTC = 0xE3;
             break;
         case 12:
+            PORTC = 0xC6;
             break;
         case 13:
+            PORTC = 0xE9;
             break;
         case 14:
+            PORTC = 0xC7;
             break;
         case 15:
+            PORTC = 0x87;
             break;
         default:
-            PORTC = 0xFE;
+            PORTC = 0xEF;
             break;
     }
 

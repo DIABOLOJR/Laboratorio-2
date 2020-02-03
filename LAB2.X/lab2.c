@@ -21,7 +21,7 @@
 
 #include <xc.h>
 #include <stdint.h>
-
+#include "7Segmentos.h"
 unsigned int uint8_t a = 0;
 int b = 0;
 int c = 0;

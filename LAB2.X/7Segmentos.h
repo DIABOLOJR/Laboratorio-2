@@ -32,7 +32,7 @@
 #define	__SEVENSINS_H_
 
 #include <xc.h> // include processor files - each processor file is guarded.  
-
+void sevenseg (valor);
 
 #endif	/* __SEVENSINS_H_ */
 
