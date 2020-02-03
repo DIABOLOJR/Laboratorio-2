@@ -22,20 +22,41 @@
 #include <xc.h>
 #include <stdint.h>
 
-int a = 0;
-float b = 0;
+unsigned int uint8_t a = 0;
+int b = 0;
+int c = 0;
+
+float d = 0;
+
 void main(void) {
     return;
 }
 /*
- Codigo de incrementos
+ * Codigo de incrementos
  */
 void contador(void){
-    if (PORTDbits.RD0 =0){
+    if (b =0){
         a++;
         PORTB = a;
-    } else if (PORTDbits.RD1 = 0){
-        a--;
+    } else if (c = 0){
+        a--;+
         PORTB = a;
+    }
+}
+/*
+ * Interrupción
+ */
+void __interrupt () isr (void){
+    if(INTCONbits.RBIF == 1){
+        if (PORTDbits.RD0 == 1){
+            b=0;    
+            INTCONbits.RBIF == 0;
+        }
+    }
+}
+
+void delay_ms(unsigned int dms){
+    for(int i = 0; i<dms; i++){// ciclo para el aumento en miisegundos.
+        for(int j = 0; j<255; j++);
     }
 }
