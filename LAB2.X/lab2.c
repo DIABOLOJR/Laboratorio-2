@@ -63,9 +63,21 @@ void __interrupt () isr (void){
             b=0;    
             INTCONbits.RBIF == 0;
         }else if (PORTBbits.RB1 == 1){
-            
+            c = 0;
+            INTCONbits.RBIF == 0;
         }
     }
+    if (INTCONbits.T0IF == 1) {
+        if (PORTDbits.RD0 == 1){
+            PORTDbits.RD0 = 0;
+            PORTDbits.RD3 = 1;
+        }else if (PORTDbits.RD3 == 1){
+            PORTDbits.RD0 = 1;
+            PORTDbits.RD3 = 0;
+        }
+    }
+    
+    
 }
 /*
  *Delay codigo de ejemplo en clase
@@ -82,18 +94,16 @@ void delay_ms(unsigned int dms){
 
 void valorsevenseg (void){
     valor1 = conversion && 0b00001111;
-    encendido(valor1);
+    valor = valor1;
+    sevenseg(valor);
 }
 void valorsevenseg2 (void){
     valor2 = conversion && 0b11110000;
     valor2 = valor2>>4;
-    encendido(valor2);
+    valor = valor2;
+    sevenseg(valor);
 }
 
 /*
  *
  */
-
-void encendido (void){
-    
-}
