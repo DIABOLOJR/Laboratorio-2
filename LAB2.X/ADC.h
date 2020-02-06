@@ -28,11 +28,10 @@
 
 // This is a guard condition so that contents of this file are not included
 // more than once.  
-#ifndef __SEVENSINS_H_
-#define	__SEVENSINS_H_
+#ifndef __ADC_H_
+#define	__ADC_H_
 
 #include <xc.h> // include processor files - each processor file is guarded.  
-void sevenseg (int valor);
-
-#endif	/* __SEVENSINS_H_ */
+void adc (int activo);
+#endif	/* __ADC_H_ */
 

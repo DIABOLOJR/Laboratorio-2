@@ -24,36 +24,27 @@
  */
 #include <xc.h>
 #include <stdint.h>
+#define _XTAL_FREQ 4000000  
 #include "7Segmentos.h"
 
 /*
  *Variables y asignaciones previas
  */
-unsigned int uint8_t a = 0;
+uint8_t a = 0;
 int b = 0;
+int valor;
+int turnon;
 int c = 0;
 int conversion = 0;
 int valor1 = 0;
 int valor2 = 0;
 float d = 0;
+int multi;
+int calculado;
 /*
  *Main
  */
-void main(void) {
-    return;
-}
-/*
- * Codigo de incrementos
- */
-void contador(void){
-    if (b =0){
-        a++;
-        PORTB = a;
-    } else if (c = 0){
-        a--;+
-        PORTB = a;
-    }
-}
+
 /*
  * Interrupción
  */
@@ -61,23 +52,52 @@ void __interrupt () isr (void){
     if(INTCONbits.RBIF == 1){
         if (PORTBbits.RB7 == 1){
             b=0;    
-            INTCONbits.RBIF == 0;
+            INTCONbits.RBIF = 0;
         }else if (PORTBbits.RB1 == 1){
             c = 0;
-            INTCONbits.RBIF == 0;
+            INTCONbits.RBIF = 0;
         }
     }
     if (INTCONbits.T0IF == 1) {
-        if (PORTDbits.RD0 == 1){
-            PORTDbits.RD0 = 0;
-            PORTDbits.RD3 = 1;
-        }else if (PORTDbits.RD3 == 1){
-            PORTDbits.RD0 = 1;
-            PORTDbits.RD3 = 0;
-        }
+        turnon=0;
+        multi++;
+        TMR0 = calculado;
+        INTCONbits.T0IF = 0;
+    }
+        
+    
+    else if (ADCON0bits.GO_DONE == 1){
+        conversion = ADRESH;
+        ADCON0bits.GO_DONE = 1;
+        PIR1bits.ADIF =0;
     }
     
     
+}
+
+void main(void) {
+    while (1){
+        
+        contador();
+        enceder();
+        if (turnon == 0){
+            funciontmr0();
+            turnon = 1;
+        }
+    }
+    return;
+}
+/*
+ * Codigo de incrementos
+ */
+void contador(void){
+    if (b == 1){
+        a++;
+        PORTB = a;
+    } else if (c == 0){
+        a--;
+        PORTB = a;
+    }
 }
 /*
  *Delay codigo de ejemplo en clase
@@ -93,12 +113,12 @@ void delay_ms(unsigned int dms){
  */
 
 void valorsevenseg (void){
-    valor1 = conversion && 0b00001111;
+    valor1 = conversion & 0b00001111;
     valor = valor1;
     sevenseg(valor);
 }
 void valorsevenseg2 (void){
-    valor2 = conversion && 0b11110000;
+    valor2 = conversion & 0b11110000;
     valor2 = valor2>>4;
     valor = valor2;
     sevenseg(valor);
@@ -107,3 +127,17 @@ void valorsevenseg2 (void){
 /*
  *
  */
+
+void enceder (void){
+    if (turnon == 1){
+        valorsevenseg();
+    } else if (turnon == 0){
+        valorsevenseg2();
+    }
+}
+
+
+
+void funciontmr0(void){
+    
+}

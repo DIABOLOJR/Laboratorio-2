@@ -2495,7 +2495,7 @@ extern __bank0 __bit __timeout;
 # 27 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.10\\pic\\include\\xc.h" 2 3
 # 34 "./7Segmentos.h" 2
 
-void sevenseg (valor);
+void sevenseg (int valor);
 # 1 "SEVENSEGS.c" 2
 
 int valor;
