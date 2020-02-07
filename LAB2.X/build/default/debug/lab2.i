@@ -1,4 +1,4 @@
-# 1 "ADC.c"
+# 1 "lab2.c"
 # 1 "<built-in>" 1
 # 1 "<built-in>" 3
 # 288 "<built-in>" 3
@@ -6,9 +6,32 @@
 # 1 "<built-in>" 2
 # 1 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.10\\pic\\include\\language_support.h" 1 3
 # 2 "<built-in>" 2
-# 1 "ADC.c" 2
-# 1 "./ADC.h" 1
-# 34 "./ADC.h"
+# 1 "lab2.c" 2
+
+
+
+
+
+
+#pragma config FOSC = INTRC_CLKOUT
+#pragma config WDTE = OFF
+#pragma config PWRTE = OFF
+#pragma config MCLRE = ON
+#pragma config CP = OFF
+#pragma config CPD = OFF
+#pragma config BOREN = ON
+#pragma config IESO = OFF
+#pragma config FCMEN = OFF
+#pragma config LVP = OFF
+
+
+#pragma config BOR4V = BOR40V
+#pragma config WRT = OFF
+
+
+
+
+
 # 1 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.10\\pic\\include\\xc.h" 1 3
 # 18 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.10\\pic\\include\\xc.h" 3
 extern const char __xc8_OPTIM_SPEED;
@@ -2493,21 +2516,283 @@ extern __bank0 unsigned char __resetbits;
 extern __bank0 __bit __powerdown;
 extern __bank0 __bit __timeout;
 # 27 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.10\\pic\\include\\xc.h" 2 3
-# 34 "./ADC.h" 2
+# 25 "lab2.c" 2
 
-void adc (int activo);
-# 1 "ADC.c" 2
+# 1 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.10\\pic\\include\\c90\\stdint.h" 1 3
+# 13 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.10\\pic\\include\\c90\\stdint.h" 3
+typedef signed char int8_t;
 
-int activo;
-void adc (int activo){
-    switch (activo){
-        case 5:
-            ADCON0 = 0x55;
-            break;
 
-        default:
-            ADCON0 = 0x55;
-            break;
 
+
+
+
+typedef signed int int16_t;
+
+
+
+
+
+
+
+typedef __int24 int24_t;
+
+
+
+
+
+
+
+typedef signed long int int32_t;
+# 52 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.10\\pic\\include\\c90\\stdint.h" 3
+typedef unsigned char uint8_t;
+
+
+
+
+
+typedef unsigned int uint16_t;
+
+
+
+
+
+
+typedef __uint24 uint24_t;
+
+
+
+
+
+
+typedef unsigned long int uint32_t;
+# 88 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.10\\pic\\include\\c90\\stdint.h" 3
+typedef signed char int_least8_t;
+
+
+
+
+
+
+
+typedef signed int int_least16_t;
+# 109 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.10\\pic\\include\\c90\\stdint.h" 3
+typedef __int24 int_least24_t;
+# 118 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.10\\pic\\include\\c90\\stdint.h" 3
+typedef signed long int int_least32_t;
+# 136 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.10\\pic\\include\\c90\\stdint.h" 3
+typedef unsigned char uint_least8_t;
+
+
+
+
+
+
+typedef unsigned int uint_least16_t;
+# 154 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.10\\pic\\include\\c90\\stdint.h" 3
+typedef __uint24 uint_least24_t;
+
+
+
+
+
+
+
+typedef unsigned long int uint_least32_t;
+# 181 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.10\\pic\\include\\c90\\stdint.h" 3
+typedef signed char int_fast8_t;
+
+
+
+
+
+
+typedef signed int int_fast16_t;
+# 200 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.10\\pic\\include\\c90\\stdint.h" 3
+typedef __int24 int_fast24_t;
+
+
+
+
+
+
+
+typedef signed long int int_fast32_t;
+# 224 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.10\\pic\\include\\c90\\stdint.h" 3
+typedef unsigned char uint_fast8_t;
+
+
+
+
+
+typedef unsigned int uint_fast16_t;
+# 240 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.10\\pic\\include\\c90\\stdint.h" 3
+typedef __uint24 uint_fast24_t;
+
+
+
+
+
+
+typedef unsigned long int uint_fast32_t;
+# 268 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.10\\pic\\include\\c90\\stdint.h" 3
+typedef int32_t intmax_t;
+# 282 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.10\\pic\\include\\c90\\stdint.h" 3
+typedef uint32_t uintmax_t;
+
+
+
+
+
+
+typedef int16_t intptr_t;
+
+
+
+
+typedef uint16_t uintptr_t;
+# 26 "lab2.c" 2
+
+
+# 1 "./7Segmentos.h" 1
+# 35 "./7Segmentos.h"
+void sevenseg (int valor);
+# 28 "lab2.c" 2
+
+
+
+
+
+
+int press1 = 0;
+int press2 = 0;
+uint8_t eADC = 0;
+uint8_t eTMR0 = 0;
+int valor;
+int turnon;
+
+int conversion = 0;
+int valor1 = 0;
+int valor2 = 0;
+float d = 0;
+int multi = 0;
+int calculado;
+
+
+
+
+
+
+
+void __attribute__((picinterrupt(("")))) isr (void){
+
+    if(INTCONbits.RBIF == 1){
+        if (PORTBbits.RB7 == 0){
+            press1 = 1;}
+        if (PORTBbits.RB1 == 0){
+            press2 = 1;}
+        INTCONbits.RBIF = 0;
+        }
+
+
+    if (ADCON0bits.GO_DONE == 0){
+       eADC = 1;
+       PIR1bits.ADIF =0;
     }
+
+     if (INTCONbits.T0IF == 1) {
+        eTMR0 = 1;
+        INTCONbits.T0IF = 0;
+        TMR0 = 125;}}
+
+
+
+
+
+
+
+void delay_ms(unsigned int dms){
+    for(int i = 0; i<dms; i++){
+        for(int j = 0; j<255; j++);
+    }
+}
+
+
+
+void valorsevenseg (void){
+    PORTC= 0b00000000;
+    valor1 = conversion & 0b00001111;
+    sevenseg(valor1);
+    PORTDbits.RD0 = 0;
+    PORTDbits.RD1 = 1;
+
+
+
+}
+void valorsevenseg2 (void){
+    PORTC = 0b00000000;
+    valor2 = conversion & 0b11110000;
+    valor2 = valor2>>4;
+    sevenseg(valor2);
+    PORTDbits.RD0 = 1;
+    PORTDbits.RD1 = 0;
+}
+
+
+void enceder (void){
+    if (turnon == 1){
+        valorsevenseg();
+    } else if (turnon == 0){
+        valorsevenseg2();
+    }
+}
+
+void sett(void){
+    TRISBbits.TRISB7=1;
+    TRISBbits.TRISB1=1;
+    ANSEL = 0b00000001;
+    TRISA = 0;
+    TRISC = 0;
+    TRISD = 0;
+    PORTA = 0;
+    PORTC = 0;
+    PORTD = 0;
+    OPTION_REGbits.T0CS =0;
+    OPTION_REGbits.PSA =0;
+    OPTION_REGbits.PS0 =0;
+    OPTION_REGbits.PS1 =1;
+    OPTION_REGbits.PS2 =0;
+    TMR0 = 125;
+    INTCONbits.T0IE = 1;
+    INTCONbits.T0IF = 0;
+
+    PIE1bits.ADIE = 1;
+    PIR1bits.ADIF = 0;
+    ADCON0 = 0b01010101;
+    ADCON1 = 0;
+    ADCON0bits.GO_DONE=1;
+
+
+}
+
+
+void main(void) {
+    while (1){
+        sett();
+        if (press1 == 1 && PORTBbits.RB7 == 1){
+            PORTB++;}
+        if (press2 == 1 && PORTBbits.RB0 == 1){
+            PORTB--;}
+        if (eADC == 1){
+            eADC =0;
+            conversion = ADRESH;
+            ADCON0bits.GO_DONE = 1;}
+        if (eTMR0 == 1){
+            if (multi == 0){valorsevenseg();}
+            else {valorsevenseg2();}
+            multi++;
+            if (multi>1){multi = 0;}
+            eTMR0 = 0;}
+    }
+    return;
 }

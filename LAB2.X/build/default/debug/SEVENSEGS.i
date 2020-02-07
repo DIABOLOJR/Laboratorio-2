@@ -1,4 +1,4 @@
-# 1 "ADC.c"
+# 1 "SEVENSEGS.c"
 # 1 "<built-in>" 1
 # 1 "<built-in>" 3
 # 288 "<built-in>" 3
@@ -6,9 +6,9 @@
 # 1 "<built-in>" 2
 # 1 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.10\\pic\\include\\language_support.h" 1 3
 # 2 "<built-in>" 2
-# 1 "ADC.c" 2
-# 1 "./ADC.h" 1
-# 34 "./ADC.h"
+# 1 "SEVENSEGS.c" 2
+# 1 "./7Segmentos.h" 1
+# 34 "./7Segmentos.h"
 # 1 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.10\\pic\\include\\xc.h" 1 3
 # 18 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.10\\pic\\include\\xc.h" 3
 extern const char __xc8_OPTIM_SPEED;
@@ -2493,21 +2493,63 @@ extern __bank0 unsigned char __resetbits;
 extern __bank0 __bit __powerdown;
 extern __bank0 __bit __timeout;
 # 27 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.10\\pic\\include\\xc.h" 2 3
-# 34 "./ADC.h" 2
+# 34 "./7Segmentos.h" 2
 
-void adc (int activo);
-# 1 "ADC.c" 2
+void sevenseg (int valor);
+# 1 "SEVENSEGS.c" 2
 
-int activo;
-void adc (int activo){
-    switch (activo){
+int valor;
+void sevenseg (int valor){
+    switch (valor){
+        case 1:
+            PORTC = 0x28;
+            break;
+        case 2:
+            PORTC = 0xCD;
+            break;
+        case 3:
+            PORTC = 0x6D;
+            break;
+        case 4:
+            PORTC = 0x2B;
+            break;
         case 5:
-            ADCON0 = 0x55;
+            PORTC = 0x67;
             break;
-
+        case 6:
+            PORTC = 0xE7;
+            break;
+        case 7:
+            PORTC = 0x2D;
+            break;
+        case 8:
+            PORTC = 0xEF;
+            break;
+        case 9:
+            PORTC = 0x6F;
+            break;
+        case 10:
+            PORTC = 0xAF;
+            break;
+        case 11:
+            PORTC = 0xE3;
+            break;
+        case 12:
+            PORTC = 0xC6;
+            break;
+        case 13:
+            PORTC = 0xE9;
+            break;
+        case 14:
+            PORTC = 0xC7;
+            break;
+        case 15:
+            PORTC = 0x87;
+            break;
         default:
-            ADCON0 = 0x55;
+            PORTC = 0xEF;
             break;
-
     }
+
+
 }

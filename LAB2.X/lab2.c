@@ -30,16 +30,19 @@
 /*
  *Variables y asignaciones previas
  */
-uint8_t a = 0;
-int b = 0;
+
+int press1 = 0;
+int press2 = 0;
+uint8_t eADC = 0;
+uint8_t eTMR0 = 0;
 int valor;
 int turnon;
-int c = 0;
+
 int conversion = 0;
 int valor1 = 0;
 int valor2 = 0;
 float d = 0;
-int multi;
+int multi = 0;
 int calculado;
 /*
  *Main
@@ -49,56 +52,29 @@ int calculado;
  * Interrupción
  */
 void __interrupt () isr (void){
-    if(INTCONbits.RBIF == 1){
-        if (PORTBbits.RB7 == 1){
-            b=0;    
-            INTCONbits.RBIF = 0;
-        }else if (PORTBbits.RB1 == 1){
-            c = 0;
-            INTCONbits.RBIF = 0;
+    /******** interrupicion por iocb*/
+    if(INTCONbits.RBIF == 1){ /*Se enciende la bandera*/
+        if (PORTBbits.RB7 == 0){
+            press1 = 1;}
+        if (PORTBbits.RB1 == 0){
+            press2 = 1;}
+        INTCONbits.RBIF = 0;
         }
+   /*------------------------------------*/
+   /*********** INTERRUPCION DEL ADC ***********/
+    if (ADCON0bits.GO_DONE == 0){
+       eADC = 1;
+       PIR1bits.ADIF =0;
     }
-    if (INTCONbits.T0IF == 1) {
-        turnon=0;
-        multi++;
-        TMR0 = calculado;
+    /*-------------------------*/
+     if (INTCONbits.T0IF == 1) {
+        eTMR0 = 1;        
         INTCONbits.T0IF = 0;
-    }
-        
-    
-    else if (ADCON0bits.GO_DONE == 1){
-        conversion = ADRESH;
-        ADCON0bits.GO_DONE = 1;
-        PIR1bits.ADIF =0;
-    }
-    
-    
-}
+        TMR0 = 125;}}
 
-void main(void) {
-    while (1){
-        
-        contador();
-        enceder();
-        if (turnon == 0){
-            funciontmr0();
-            turnon = 1;
-        }
-    }
-    return;
-}
 /*
  * Codigo de incrementos
- */
-void contador(void){
-    if (b == 1){
-        a++;
-        PORTB = a;
-    } else if (c == 0){
-        a--;
-        PORTB = a;
-    }
-}
+ *
 /*
  *Delay codigo de ejemplo en clase
  */
@@ -108,25 +84,27 @@ void delay_ms(unsigned int dms){
     }
 }
 
-/*
- *Conversion del ADC
- */
+
 
 void valorsevenseg (void){
+    PORTC= 0b00000000;
     valor1 = conversion & 0b00001111;
-    valor = valor1;
-    sevenseg(valor);
+    sevenseg(valor1);
+    PORTDbits.RD0 = 0;
+    PORTDbits.RD1 = 1;
+    
+    
+    
 }
 void valorsevenseg2 (void){
+    PORTC = 0b00000000;
     valor2 = conversion & 0b11110000;
     valor2 = valor2>>4;
-    valor = valor2;
-    sevenseg(valor);
+    sevenseg(valor2);
+    PORTDbits.RD0 = 1;
+    PORTDbits.RD1 = 0;
 }
 
-/*
- *
- */
 
 void enceder (void){
     if (turnon == 1){
@@ -136,8 +114,53 @@ void enceder (void){
     }
 }
 
-
-
-void funciontmr0(void){
+void sett(void){
+    TRISBbits.TRISB7=1;
+    TRISBbits.TRISB1=1;
+    ANSEL = 0;
+    TRISA = 0;
+    TRISC = 0;
+    TRISD = 0;
+    TRISE = 0b0001;
+    PORTA = 0;
+    PORTC = 0;
+    PORTD = 0;
+    OPTION_REGbits.T0CS =0;
+    OPTION_REGbits.PSA =0;
+    OPTION_REGbits.PS0 =0;
+    OPTION_REGbits.PS1 =1;
+    OPTION_REGbits.PS2 =0;
+    TMR0 = 125;
+    INTCONbits.T0IE = 1;
+    INTCONbits.T0IF = 0;
     
+    PIE1bits.ADIE = 1; 
+    PIR1bits.ADIF = 0; 
+    ADCON0 = 0b01010101;
+    ADCON1 = 0;        
+    ADCON0bits.GO_DONE=1;
+ 
+    
+}
+
+/*MAIN PRINCIPAL-----------------------------------------------------------*/
+void main(void) {
+    while (1){
+        sett();
+        if (press1 == 1 && PORTBbits.RB7 == 1){
+            PORTB++;}
+        if (press2 == 1 && PORTBbits.RB0 == 1){
+            PORTB--;}
+        if (eADC == 1){
+            eADC =0;
+            conversion = ADRESH;
+            ADCON0bits.GO_DONE = 1;}
+        if (eTMR0 == 1){
+            if (multi == 0){valorsevenseg();}
+            else {valorsevenseg2();}
+            multi++;
+            if (multi>1){multi = 0;}
+            eTMR0 = 0;}
+    }
+    return;
 }
