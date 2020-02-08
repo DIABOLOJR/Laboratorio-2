@@ -1,6 +1,6 @@
 #include "7Segmentos.h"
 int valor;
-void sevenseg (int valor){
+void sevenseg (int valor){// switch case apra cada valor del 7 segmentos 
     switch (valor){
         case 1:
             PORTC = 0x28;

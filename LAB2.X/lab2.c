@@ -45,10 +45,6 @@ float d = 0;
 int multi = 0;
 int calculado;
 /*
- *Main
- */
-
-/*
  * Interrupción
  */
 void __interrupt () isr (void){
@@ -72,9 +68,7 @@ void __interrupt () isr (void){
         INTCONbits.T0IF = 0;
         TMR0 = 125;}}
 
-/*
- * Codigo de incrementos
- *
+
 /*
  *Delay codigo de ejemplo en clase
  */
@@ -86,11 +80,11 @@ void delay_ms(unsigned int dms){
 
 
 
-void valorsevenseg (void){
-    PORTC= 0b00000000;
-    valor1 = conversion & 0b00001111;
-    sevenseg(valor1);
-    PORTDbits.RD0 = 0;
+void valorsevenseg (void){//funcion del valor de 7 segmento enseñadop en calse
+    PORTC= 0b00000000;/*setei dek oyeti eb 0*/
+    valor1 = conversion & 0b00001111; // valor de converción añadido a valor
+    sevenseg(valor1);// llamado de funcion 
+    PORTDbits.RD0 = 0;/*enceder y apagar los transistores*/
     PORTDbits.RD1 = 1;
     
     
@@ -99,21 +93,14 @@ void valorsevenseg (void){
 void valorsevenseg2 (void){
     PORTC = 0b00000000;
     valor2 = conversion & 0b11110000;
-    valor2 = valor2>>4;
+    valor2 = valor2>>4;//corrimiento de 4 bits para el 7 segentos 2
     sevenseg(valor2);
     PORTDbits.RD0 = 1;
     PORTDbits.RD1 = 0;
 }
 
 
-void enceder (void){
-    if (turnon == 1){
-        valorsevenseg();
-    } else if (turnon == 0){
-        valorsevenseg2();
-    }
-}
-
+/*configuracion del pic16f887*/
 void sett(void){
     TRISBbits.TRISB7=1;
     TRISBbits.TRISB1=1;
@@ -125,6 +112,7 @@ void sett(void){
     PORTA = 0;
     PORTC = 0;
     PORTD = 0;
+    // configuracion del Timer0
     OPTION_REGbits.T0CS =0;
     OPTION_REGbits.PSA =0;
     OPTION_REGbits.PS0 =0;
@@ -133,7 +121,7 @@ void sett(void){
     TMR0 = 125;
     INTCONbits.T0IE = 1;
     INTCONbits.T0IF = 0;
-    
+    //configuracion del adcon (EL ADC)
     PIE1bits.ADIE = 1; 
     PIR1bits.ADIF = 0; 
     ADCON0 = 0b01010101;
@@ -146,19 +134,19 @@ void sett(void){
 /*MAIN PRINCIPAL-----------------------------------------------------------*/
 void main(void) {
     while (1){
-        sett();
+        sett();//Funcion de seteos
         if (press1 == 1 && PORTBbits.RB7 == 1){
-            PORTB++;}
+            PORTA++;}//Funcion de incremento de puetro b despues delos botonasos
         if (press2 == 1 && PORTBbits.RB0 == 1){
-            PORTB--;}
+            PORTA--;}//funcion de decremetno
         if (eADC == 1){
-            eADC =0;
+            eADC =0;//enable del ADC
             conversion = ADRESH;
-            ADCON0bits.GO_DONE = 1;}
+            ADCON0bits.GO_DONE = 1;}//seteo de inciio del ADC
         if (eTMR0 == 1){
-            if (multi == 0){valorsevenseg();}
+            if (multi == 0){valorsevenseg();}//valor del 7 segmentos desde la funcion
             else {valorsevenseg2();}
-            multi++;
+            multi++;//variable a icrementar para yamar por el puerto
             if (multi>1){multi = 0;}
             eTMR0 = 0;}
     }

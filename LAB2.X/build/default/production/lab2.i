@@ -2680,10 +2680,6 @@ int calculado;
 
 
 
-
-
-
-
 void __attribute__((picinterrupt(("")))) isr (void){
 
     if(INTCONbits.RBIF == 1){
@@ -2704,8 +2700,6 @@ void __attribute__((picinterrupt(("")))) isr (void){
         eTMR0 = 1;
         INTCONbits.T0IF = 0;
         TMR0 = 125;}}
-
-
 
 
 
@@ -2739,13 +2733,6 @@ void valorsevenseg2 (void){
 }
 
 
-void enceder (void){
-    if (turnon == 1){
-        valorsevenseg();
-    } else if (turnon == 0){
-        valorsevenseg2();
-    }
-}
 
 void sett(void){
     TRISBbits.TRISB7=1;

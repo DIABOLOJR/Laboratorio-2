@@ -28,7 +28,7 @@
 
 // This is a guard condition so that contents of this file are not included
 // more than once.  
-#ifndef __SEVENSINS_H_
+#ifndef __SEVENSINS_H_ /*nombre de la funcion*/
 #define	__SEVENSINS_H_
 
 #include <xc.h> // include processor files - each processor file is guarded.  

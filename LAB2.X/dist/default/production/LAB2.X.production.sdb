@@ -11,15 +11,15 @@
 [v ___eecpymem __eecpymem `(v  1 e 1 0 ]
 "39
 [v ___memcpyee __memcpyee `(v  1 e 1 0 ]
-"54 C:\Users\egman\OneDrive\Escritorio\Laboratorio-2\LAB2.X\lab2.c
+"50 C:\Users\egman\OneDrive\Escritorio\Laboratorio-2\LAB2.X\lab2.c
 [v _isr isr `II(v  1 e 1 0 ]
-"89
+"83
 [v _valorsevenseg valorsevenseg `(v  1 e 1 0 ]
-"99
+"93
 [v _valorsevenseg2 valorsevenseg2 `(v  1 e 1 0 ]
-"117
+"104
 [v _sett sett `(v  1 e 1 0 ]
-"147
+"134
 [v _main main `(v  1 e 1 0 ]
 "3 C:\Users\egman\OneDrive\Escritorio\Laboratorio-2\LAB2.X\SEVENSEGS.c
 [v _sevenseg sevenseg `(v  1 e 1 0 ]
@@ -177,20 +177,20 @@
 [v _valor2 valor2 `i  1 e 2 0 ]
 "45
 [v _multi multi `i  1 e 2 0 ]
-"147
+"134
 [v _main main `(v  1 e 1 0 ]
 {
-"166
+"153
 } 0
-"99
+"93
 [v _valorsevenseg2 valorsevenseg2 `(v  1 e 1 0 ]
 {
-"106
+"100
 } 0
-"89
+"83
 [v _valorsevenseg valorsevenseg `(v  1 e 1 0 ]
 {
-"98
+"92
 } 0
 "3 C:\Users\egman\OneDrive\Escritorio\Laboratorio-2\LAB2.X\SEVENSEGS.c
 [v _sevenseg sevenseg `(v  1 e 1 0 ]
@@ -198,13 +198,13 @@
 [v sevenseg@valor valor `i  1 p 2 2 ]
 "56
 } 0
-"117 C:\Users\egman\OneDrive\Escritorio\Laboratorio-2\LAB2.X\lab2.c
+"104 C:\Users\egman\OneDrive\Escritorio\Laboratorio-2\LAB2.X\lab2.c
 [v _sett sett `(v  1 e 1 0 ]
 {
-"144
+"131
 } 0
-"54
+"50
 [v _isr isr `II(v  1 e 1 0 ]
 {
-"73
+"69
 } 0
